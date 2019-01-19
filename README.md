@@ -3,7 +3,54 @@ Finds UOIT classes of the current day using their API and parsing the autogenera
 
 ## Usage
 `python ucf.py -s <subject code>`
-
+```
+subject codes:
+- ASLU - Academic Learning & Success 
+- AEDT - Adult Education & Digital Tech 
+- ANTH - Anthropology 
+- APBS - Applied Bioscience 
+- AUTE - Automotive Engineering 
+- BIOL - Biology 
+- BUSI - Business 
+- CHEM - Chemistry 
+- COMM - Communications 
+- CSCI - Computer Science 
+- CRMN - Criminology and Justice 
+- ECON - Economics 
+- EDUC - Education 
+- ELEE - Electrical Engineering 
+- ENGR - Engineering 
+- ENGL - English 
+- EAP - English for Academic Purposes 
+- ENVS - Environmental Science 
+- FSCI - Forensic Science 
+- FREN - French 
+- HLSC - Health Science 
+- HIST - History 
+- INDG - Indigenous Studies 
+- INFR - Information Technology 
+- LGLS - Legal Studies 
+- MANE - Manufacturing Engineering 
+- MITS - Masters of IT Security 
+- MTSC - Materials Science 
+- MATH - Mathematics 
+- MECE - Mechanical Engineering 
+- METE - Mechatronics 
+- MLSC - Medical Lab Science 
+- MCSC - Modelling & Computational Science 
+- NUCL - Nuclear 
+- NURS - Nursing 
+- PHIL - Philosophy 
+- POSC - Politcal Science 
+- PSYC - Psychology 
+- RADI - Radiation Science 
+- SCCO - Science Co-op Work Term 
+- SSCI - Social Science 
+- SOCI - Sociology 
+- SOFE - Software Engineering 
+- SPAN - Spanish 
+- STAT - Statstics 
+```
 ## Examples
 `python ucf.py -s ENGR`
 which returns
