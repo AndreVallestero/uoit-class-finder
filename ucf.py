@@ -6,14 +6,14 @@ import sys, getopt
 def main(argv):
 
     apiParams = {
-        "subject": "SOFE",
+        "subject": "",
         "course": "dummy",
         "location": "UON",
         "day": curr_day().lower()
     }
 
     try:
-        opts, args = getopt.getopt(argv[1:],  "h:s:c:l")
+        opts, args = getopt.getopt(argv,  "h:s:c:l")
     except getopt.GetoptError:
         print('use "ucc.py -h" for manual')
         sys.exit(2)
@@ -77,7 +77,7 @@ class ScheduleParser(HTMLParser):
                 self.timeScan = True
             elif (self.timeColumnCount == 2):
                 self.dayScan = True
-                
+
     def handle_endtag(self, tag):
         if (tag == "th" and self.headerScan):
             self.headerScan = False
