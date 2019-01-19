@@ -3,8 +3,8 @@ Finds UOIT classes of the current day using their API and parsing the autogenera
 
 ## Usage
 `python ucf.py -s <subject code>`
-```
-subject codes:
+
+subject codes: 
 - ASLU - Academic Learning & Success 
 - AEDT - Adult Education & Digital Tech 
 - ANTH - Anthropology 
@@ -50,7 +50,7 @@ subject codes:
 - SOFE - Software Engineering 
 - SPAN - Spanish 
 - STAT - Statstics 
-```
+
 ## Examples
 `python ucf.py -s ENGR`
 which returns
