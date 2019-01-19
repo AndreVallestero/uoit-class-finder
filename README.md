@@ -49,6 +49,6 @@ Day:  F
 12:40 pm - 2:00 pm
 ```
 
-I suggest setting up an alias for `python -ucf` to make usage simpler as shown below:
+I suggest setting up an alias for `python ucf.py` to make usage simpler as shown below:
 
 ![example picture](https://i.imgur.com/0FYwGlC.png)
