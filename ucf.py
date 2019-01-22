@@ -57,6 +57,8 @@ class ScheduleParser(HTMLParser):
         self.timeSearch = False
         self.timeScan = False
         self.dayScan = False
+        self.roomScan = False
+        self.validDay = False
         self.timeRowCount = -1
         self.timeColumnCount = -1
         self.timeBuffer = ""
@@ -71,32 +73,41 @@ class ScheduleParser(HTMLParser):
         elif (self.timeSearch and tag == "tr"):
             self.timeRowCount += 1
             self.timeColumnCount = -1
+            self.validDay = False
         elif (self.timeSearch and self.timeRowCount > 0 and tag == "td"):
             self.timeColumnCount += 1
             if (self.timeColumnCount == 1):
                 self.timeScan = True
             elif (self.timeColumnCount == 2):
                 self.dayScan = True
+            elif (self.timeColumnCount == 3):
+                self.roomScan = True
 
     def handle_endtag(self, tag):
         if (tag == "th" and self.headerScan):
             self.headerScan = False
         elif (tag == "table" and self.timeSearch):
             self.timeSearch = False
-        elif (tag == "td" and self.timeScan):
-            self.timeScan = False
-        elif (tag == "td" and self.dayScan):
-            self.dayScan = False
+        if (tag == "td"):
+            if (self.timeScan):
+                self.timeScan = False
+            elif (self.dayScan):
+                self.dayScan = False
+            elif (self.roomScan):
+                self.roomScan = False
 
     def handle_data(self, data):
         if (self.headerScan):
             courseData = data.split("-")
-            print(courseData[2], "-", courseData[0])
+            print(courseData[2][1:len(courseData)+1], "-", courseData[0])
         elif (self.timeScan):
             self.timeBuffer = data
         elif (self.dayScan):
             if(data == curr_day()):
-                print(self.timeBuffer)
+                print("\t", self.timeBuffer, end=' @ ')
+                self.validDay = True
+        elif (self.roomScan and self.validDay):
+            print(data.split()[-1])
 
 if __name__ == "__main__":
    main(sys.argv[1:])
