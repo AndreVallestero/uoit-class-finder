@@ -12,6 +12,8 @@ import time
 
 def main(argv):
     subjects = set(("SOFE", "CSCI", "ELEE"))
+    if len(argv):
+        subjects = set()
 
     apiParams = {
         "subject": "",
@@ -22,7 +24,7 @@ def main(argv):
 
     for i, arg in enumerate(argv):
         if not arg.startswith('-'):
-            subjects.add(arg)
+            subjects.add(arg.upper())
         else:
             argv = argv[i:len(argv)+1]
             break
@@ -37,7 +39,9 @@ def main(argv):
             print("test.py -s <subject code>")
             sys.exit()
         elif opt in ("-s", "--subject"):
-            subjects |= set(arg.split(','))
+            splitSubjects = arg.split(',')
+            for subject in splitSubjects:
+                subjects.add(subject.upper())
         elif opt in ("-c", "--course"):
             apiParams["course"] = arg
         elif opt in ("-l", "--location"):
@@ -123,7 +127,8 @@ class ScheduleParser(HTMLParser):
     def handle_data(self, data):
         if (self.headerScan):
             courseData = data.split("-")
-            self.schedule.append(["{} - {}".format(courseData[2][1:len(courseData)+1], courseData[0])])
+            #print(courseData)
+            self.schedule.append(["{} - {}".format(courseData[2].strip(), courseData[0])])
         elif (self.timeScan):
             self.timeBuffer = data
         elif (self.dayScan):
