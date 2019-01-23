@@ -136,7 +136,7 @@ class ScheduleParser(HTMLParser):
                 self.schedule[-1].append(self.timeBuffer)
                 self.validDay = True
         elif (self.roomScan and self.validDay):
-            self.schedule[-1].append(data.split()[-1])
+            self.schedule[-1].append(data)
 
     # DONT LOOK AT ME!, I'M UGLY!
     def sort_schedule(self):
