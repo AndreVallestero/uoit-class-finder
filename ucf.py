@@ -54,14 +54,20 @@ def main(argv):
         sys.exit(2)
 
     url = "http://ssbp.mycampus.ca/prod_uoit/bwckschd.p_get_crse_unsec"
-    reqPayload = "TRM=U&term_in=201901&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj={subject}&sel_crse=&sel_title=&sel_schd=LEC&sel_insm=CLS&sel_from_cred=&sel_to_cred=&sel_camp={location}&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a&sel_day={day}"
+    reqPayload = "TRM=U&term_in={termCode}&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj={subject}&sel_crse=&sel_title=&sel_schd=LEC&sel_insm=CLS&sel_from_cred=&sel_to_cred=&sel_camp={location}&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a&sel_day={day}"
     parser = ScheduleParser()
     
+    now = datetime.now()
+    termCode = now.year * 100 + (now.month - 1) // 4 * 4 + 1
     for subject in subjects:
+        apiParams["termCode"] = termCode
         apiParams["subject"] = subject
         response = requests.post(url, reqPayload.format(**apiParams))
+        with open("test.html", "wb+") as file:
+            file.writelines(response)
         htmlData = response.content.decode("utf-8")
         parser.feed(htmlData)
+        
 
     print("Subjects: ", ", ".join(subjects))
     parser.sort_schedule()
@@ -140,7 +146,7 @@ class ScheduleParser(HTMLParser):
 
     # DONT LOOK AT ME!, I'M UGLY!
     def sort_schedule(self):
-        self.schedule = sorted(self.schedule, key=lambda timeSlot: time.mktime(time.strptime(' '.join(timeSlot[1].split()[3:5]), "%I:%M %p")))
+        self.schedule = sorted(self.schedule, key=lambda timeSlot: time.mktime(time.strptime('00 ' + ' '.join(timeSlot[1].split()[3:5]), "%y %I:%M %p")))
 
     def print_schedule(self):
         print("Day: ", self.currDay)
